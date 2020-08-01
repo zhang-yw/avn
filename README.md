@@ -20,7 +20,7 @@ The paper and video can be found at [Paper](https://arxiv.org/pdf/1912.11684.pdf
   You will need to install Unity Editor version 2017.3.1f1 for OSX (Linux Editor is currently in Beta) from [Unity Download Archive](https://unity3d.com/get-unity/download/archive). Then run the following commands from the ai2thor base directory. 
   
   ```
-pip install invoke
+  pip install invoke
   invoke local-build
   ```
   This will create a build beneath the directory 'unity/builds/local-build/thor-local-OSXIntel64.app'. To use this build in your code, make the following change:

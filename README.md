@@ -5,7 +5,7 @@ A crucial ability of mobile intelligent agents is to integrate the evidence from
 The paper and video can be found at [Paper](https://arxiv.org/pdf/1912.11684.pdf), [Video](https://www.youtube.com/watch?v=WMpddhYZ1bc). You can find more information at our [project page](http://avn.csail.mit.edu/).
 
 ## Get Started
-- Clone the repo and cd into it:
+- Clone the repo and cd into it.
   ```
   git clone https://github.com/zhang-yw/avn.git
   cd avn
@@ -15,7 +15,7 @@ The paper and video can be found at [Paper](https://arxiv.org/pdf/1912.11684.pdf
   
   We are using a deprecated version of ai2thor. 
   
-- Build your environment. 
+- Build your environment(optional). 
   
   You will need to install Unity Editor version 2017.3.1f1 for OSX (Linux Editor is currently in Beta) from [Unity Download Archive](https://unity3d.com/get-unity/download/archive). Then run the following commands from the ai2thor base directory. 
   
@@ -32,6 +32,10 @@ The paper and video can be found at [Paper](https://arxiv.org/pdf/1912.11684.pdf
   ```
   
   The scenes we are using are new1-7.
+
+- Download the dataset.
+
+  Downlad the dataset in H5py format from [Google Drive](https://drive.google.com/file/d/1uGoJBPU8qNUzTbiwjwuPH3K2r0d44Ky8/view?usp=sharing).
 
 If you think our work is useful, please consider citing use with
 

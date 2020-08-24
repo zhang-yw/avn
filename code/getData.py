@@ -8,7 +8,7 @@ if __name__ == '__main__':
 	f = h5py.File("./data/FloorPlan227.h5", "w")
 
 	controller = ai2thor.controller.Controller()
-	controller.local_executable_path = "/Users/yw-zhang/Desktop/ai2thor_2/build_history/thor-local-OSXIntel64.app/Contents/MacOS/thor-local-OSXIntel64"
+	controller.local_executable_path = "/home/chenpeihao/Projects/avn/ai2thor/unity/builds/thor-local-OSXIntel64.app/Contents/MacOS/thor-local-OSXIntel64"
 	controller.start()
 	controller.reset('FloorPlan227_2')
 	controller.step(dict(action='Initialize', gridSize=0.5))

@@ -1,0 +1,16 @@
+_MACOSX
+ai2thor
+memory
+data
+logs
+results
+.vscode
+env-habitat-v1.5
+data
+data_
+env-habitat-v1.5
+*.egg-info
+.ipynb_checkpoints/
+__pycache__
+my_scripts/
+logs/

@@ -30,14 +30,19 @@ def build_graph(memory):
   return graph
 
 def getSimilar(memory, feature):
+  res_li = []
   for i in range(memory['obs'].shape[0]):
     res = np.linalg.norm(memory['features'][i]-feature)
-    if res < 1:
-      return memory['locs'][i], memory['orientations'][i], True
-  '''for i in range(memory['obs'].shape[0]):
-    res = np.linalg.norm(memory['features'][i]-feature)
-    if res < 10:
-      return memory['locs'][i], memory['orientations'][i], False'''
+    res_li.append(res)
+  top_t_li = sorted(range(len(a)), key=lambda i: a[i])[-3:] 
+  if res[top_t_li[2]] < 0.1:
+    return memory['locs'][top_t_li[2]], memory['orientations'][top_t_li[2]], True
+  else:
+    x_s = memory['locs'][top_t_li[:]][0]
+    x = int(2*(x_s[0] + x_s[1] + x_s[2])/3.0+0.5)/2.0
+    y_s = memory['locs'][top_t_li[:]][1]
+    y = int(2*(y_s[0] + y_s[1] + y_s[2])/3.0+0.5)/2.0
+    return x, y, True
 
 def next_point(graph, now_loc, target):
   now_id = node_set.index(tuple(now_loc))

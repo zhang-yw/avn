@@ -8,11 +8,12 @@ import argparse
 import numpy as np
 import networkx as nx
 import h5py
+import random
 
 from scene_loader import THORDiscreteEnvironment
 from utils.tools import SimpleImageViewer
 
-target = np.array([-17,7])
+# target = np.array([-4,2])
 
 def build_graph(memory):
   graph = nx.Graph()
@@ -34,8 +35,8 @@ def getSimilar(memory, feature):
   for i in range(memory['obs'].shape[0]):
     res = np.linalg.norm(memory['features'][i]-feature)
     res_li.append(res)
-  top_t_li = sorted(range(len(a)), key=lambda i: a[i])[:3] 
-  if res[top_t_li[0]] < 0.1:
+  top_t_li = sorted(range(len(res_li)), key=lambda i: res_li[i])[:3] 
+  if res_li[top_t_li[0]] < 0.1:
     return memory['locs'][top_t_li[0]], memory['orientations'][top_t_li[0]], True
   else:
     x_s = memory['locs'][top_t_li[:]][0]
@@ -107,6 +108,8 @@ if __name__ == '__main__':
 
   random_m = h5py.File("./memory/random_walk.h5", "r")
   graph = build_graph(random_m)
+  target = node_set[random.randint(0, len(node_set)-1)]
+  print("random target:", target)
 
   env.reset()
 

@@ -48,8 +48,8 @@ class THORDiscreteEnvironment(object):
 
     # we use pre-computed fc7 features from ResNet-50
     # self.s_t = np.zeros([self.screen_height, self.screen_width, self.history_length])
-    self.s_t      = np.zeros([2048, self.history_length])
-    self.s_t1     = np.zeros_like(self.s_t)
+    # self.s_t      = np.zeros([2048, self.history_length])
+    # self.s_t1     = np.zeros_like(self.s_t)
     # self.s_target = self._tiled_state(self.terminal_state_id)
 
     self.reset()
@@ -81,6 +81,7 @@ class THORDiscreteEnvironment(object):
     time.sleep(0.5)
     assert not self.terminal, 'step() called in terminal state'
     k = self.current_state_id
+    # print("transition:", self.transition_graph[k], "action", action)
     if self.transition_graph[k][action] != -1:
       self.current_state_id = self.transition_graph[k][action]
       if self.terminals[self.current_state_id]:
@@ -96,8 +97,8 @@ class THORDiscreteEnvironment(object):
     self.reward = self._reward(self.terminal, self.collided)
     # self.s_t1 = np.append(self.s_t[:,1:], self.state, axis=1)
 
-  def update(self):
-    self.s_t = self.s_t1
+  # def update(self):
+  #   self.s_t = self.s_t1
 
   # private methods
 
@@ -138,9 +139,9 @@ class THORDiscreteEnvironment(object):
     k = random.randrange(self.n_feat_per_locaiton)
     return self.h5_file['resnet_feature'][self.current_state_id][:,np.newaxis]
 
-  @property
-  def target(self):
-    return self.s_target
+  # @property
+  # def target(self):
+  #   return self.s_target
 
   @property
   def x(self):
@@ -160,14 +161,14 @@ class THORDiscreteEnvironment(object):
 
   @property
   def predict(self):
-    p_locs = np.array(self.f_3['locs'])
-    p_pres = np.array(self.f_3['predicts'])
-    for i in range(304):
-      if abs(self.x - p_locs[i][0]) <=0.3 and abs(self.z - p_locs[i][1]) <= 0.3 and self.r == p_locs[i][2]*90:
-        return p_pres[i]
-    print("not found")
-    exit(0)
-    #return self.h5_file['predict_source'][self.current_state_id]
+    # p_locs = np.array(self.f_3['locs'])
+    # p_pres = np.array(self.f_3['predicts'])
+    # for i in range(304):
+    #   if abs(self.x - p_locs[i][0]) <=0.3 and abs(self.z - p_locs[i][1]) <= 0.3 and self.r == p_locs[i][2]*90:
+    #     return p_pres[i]
+    # print("not found")
+    # exit(0)
+    return self.h5_file['predict_source'][self.current_state_id]
 
 if __name__ == "__main__":
   scene_name = 'bedroom_04'

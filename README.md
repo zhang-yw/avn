@@ -11,7 +11,7 @@ The paper and video can be found at [Paper](https://arxiv.org/pdf/1912.11684.pdf
   cd avn
   ```
   
-  Download the data from [Google Drive](https://drive.google.com/file/d/1Zafj1T4LYW_ho3AyJmeB-ldAQp8-SXA-/view?usp=sharing) and unzip it. 
+  Download the data from [Google Drive](https://drive.google.com/file/d/1uGoJBPU8qNUzTbiwjwuPH3K2r0d44Ky8/view?usp=sharing) and unzip it. 
   
   We are using a deprecated version of ai2thor. 
   

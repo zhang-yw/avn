@@ -12,15 +12,18 @@ from constants import SCREEN_HEIGHT
 from constants import HISTORY_LENGTH
 import time
 
+target_loc = [[-11, 1.5], [-5.5, 4], [0, -2], [-1.5, 5], [-5.5, 1], [-1.5, 2], [-1, 6]]
+
 class THORDiscreteEnvironment(object):
 
   def __init__(self, config=dict()):
 
     # configurations
-    self.scene_name          = config.get('scene_name', 'bedroom_04')
+    self.scene_name          = config.get('scene_name', 'nnew1')
     self.random_start        = config.get('random_start', True)
     self.n_feat_per_locaiton = config.get('n_feat_per_locaiton', 1) # 1 for no sampling
     self.terminal_state_id   = config.get('terminal_state_id', 110)
+    self.scene_rank           = config.get('scene_num', '0')
     # self.f_3 = h5py.File("/Users/yw-zhang/Desktop/cvpr_code_for227/source_predict_227.h5", "r")
 
     self.h5_file_path = config.get('h5_file_path', 'data/%s.h5'%self.scene_name)
@@ -31,13 +34,13 @@ class THORDiscreteEnvironment(object):
     self.n_locations = self.locations.shape[0]
 
     self.terminals = np.zeros(self.n_locations)
-    self.terminals[self.terminal_state_id] = 1
-    self.terminal_states, = np.where(self.terminals)
 
-    self.terminals[108] = 1
-    self.terminals[109] = 1
-    self.terminals[110] = 1
-    self.terminals[111] = 1
+    terminal_loc = target_loc[self.scene_rank]
+
+    for i in range(self.n_locations):
+      if self.locations[i][0] >= terminal_loc[0]-0.5 and self.locations[i][0] <= terminal_loc[0]+0.5:
+        if self.locations[i][1] >= terminal_loc[1]-0.5 and self.locations[i][1] <= terminal_loc[1]+0.5:
+          self.terminals[i] = 1
 
     self.transition_graph = self.h5_file['graph'][()]
     # self.shortest_path_distances = self.h5_file['shortest_path_distance'][()]

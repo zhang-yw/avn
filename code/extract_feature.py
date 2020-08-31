@@ -18,6 +18,8 @@ handle = model.avgpool.register_forward_hook(hook)
 
 # prepare data
 for scene_name in os.listdir("./data/environment/"):
+    if not scene_name.endswith(".h5"):
+        continue
     fc7_features = []
     # scene_name = "nnew1.h5"
     print(scene_name)

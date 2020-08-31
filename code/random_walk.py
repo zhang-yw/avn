@@ -24,7 +24,7 @@ def update_loc(direction, location):
     print('directionError')
 
 
-def rollout(env, steps):
+def rollout(env, steps, save_path):
 
   current_loc = np.array([0,0])
   current_orientation = 1 #relative to initial orientation: 0 for right, 1 for forward, 2 for left, 3 for backwards
@@ -33,7 +33,7 @@ def rollout(env, steps):
   locs = []
   orientations = []
   state_ids = []
-  f = h5py.File("./memory/random_walk_227.h5", "w")
+  f = h5py.File(save_path, "w")
   random.seed()
 
 
@@ -82,6 +82,8 @@ if __name__ == '__main__':
                       help="steps of random walk")
   parser.add_argument("-scene", "--scene_dump", type=str, default="./data/FloorPlan227.h5",
                       help="path to a hdf5 scene dump file")
+  parser.add_argument("-save", "--save_path", type=str, default="./memory/FloorPlan227.h5",
+                      help="path to a hdf5 random walk dump file")
   args = parser.parse_args()
 
   print("Steps of random walk {}".format(args.steps))
@@ -90,10 +92,11 @@ if __name__ == '__main__':
     'h5_file_path': args.scene_dump
   })
   steps = args.steps
+  save_path = args.save_path
 
   # manually disable terminal states
   env.terminals = np.zeros_like(env.terminals)
   env.terminal_states, = np.where(env.terminals)
   env.reset()
 
-  rollout(env, steps)
+  rollout(env, steps, save_path)

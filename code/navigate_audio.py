@@ -94,11 +94,14 @@ def get_traget_loc(random_m, loc, ori, _predict):
   return result
 
 def navigate(env, graph, random_m):
-  while not env.terminal:
+  n_step = 0
+  max_step = env.shortest_path_distance[0]
+  while not env.terminal and n_step < max_step:
+    n_step += 1
     feature = env.feature
     loc, ori, _ = getSimilar(random_m, feature)
     target = get_traget_loc(random_m, loc, ori, env.predict)
-    time.sleep(0.5)
+    # time.sleep(0.5)
     next_p = next_point(graph, loc, target)
     action = cal_action(loc, next_p, ori)
     print(str(action)+' '+str(env.state_id)+' '+str(loc)+' '+str(next_p)+' '+str(ori))
@@ -122,12 +125,21 @@ def navigate(env, graph, random_m):
       viewer.imshow(env.observation)
       env.step(0)
       viewer.imshow(env.observation)
-
+  if not env.terminal:
+    print("Navigate fail!")
+    return 0
+  else:
+    print("Navigate success!")
+    return n_step/max_step
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-  parser.add_argument("-s", "--scene_dump", type=str, default="./data/FloorPlan227.h5",
+  parser.add_argument("-s", "--scene_dump", type=str, default="./data/nnew1.h5",
                       help="path to a hdf5 scene dump file")
+  parser.add_argument("-m", "--memory", type=str, default="./memory/random_walk_nnew1_2000step.h5",
+                      help="path to a random walk memory")
+  parser.add_argument("-n", "--n_episode", type=int, default=20,
+                      help="number of episode to run")
   args = parser.parse_args()
 
   print("Loading scene dump {}".format(args.scene_dump))
@@ -135,12 +147,16 @@ if __name__ == '__main__':
     'h5_file_path': args.scene_dump
   })
 
-  random_m = h5py.File("./memory/random_walk_227.h5", "r")
+  random_m = h5py.File(args.memory, "r")
   graph = build_graph(random_m)
 
-  env.reset()
-
   viewer = SimpleImageViewer()
-  viewer.imshow(env.observation)
 
-  navigate(env, graph, random_m)
+  results = []
+  for i in range(args.n_episode):
+    env.reset()
+    results.append(navigate(env, graph, random_m))
+
+  print("Success for %s times out of %s episode"%(len(np.array(results).nonzero()), args.n_episode))
+
+  viewer.close()

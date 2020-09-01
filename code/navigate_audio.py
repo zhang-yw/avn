@@ -66,7 +66,7 @@ def cal_action(now_loc, next_p, now_ori):
     print("NoActionError")
 
 def get_traget_loc(random_m, loc, ori, _predict):
-  predict = _predict*10*2
+  predict = _predict*10
   temp = predict[0]
   predict[0] = predict[1]
   predict[1] = -temp

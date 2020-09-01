@@ -96,7 +96,7 @@ def get_traget_loc(random_m, loc, ori, _predict):
 def navigate(env, graph, random_m):
   n_step = 0
   max_step = env.shortest_path_distance[0]
-  while not env.terminal and n_step < max_step:
+  while not env.terminal and n_step < 2*max_step:
     n_step += 1
     feature = env.feature
     loc, ori, _ = getSimilar(random_m, feature)
